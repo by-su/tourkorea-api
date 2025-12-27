@@ -1,0 +1,18 @@
+server:
+  port: ${DISCOVERY_PORT}
+
+
+spring:
+  application:
+    name: discovery-service
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  server:
+    response-cache-update-interval-ms: ${EUREKA_SERVER_RESPONSE_CACHE_UPDATE_INTERVAL_MS}
+    eviction-interval-timer-in-ms: ${EUREKA_SERVER_EVICTION_INTERVAL_TIMER_IN_MS}
+
+property:
+  path: ${PROPERTY_PATH}
