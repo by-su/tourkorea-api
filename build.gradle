@@ -1,0 +1,69 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.3'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+bootJar {
+    enabled = false
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+// 현재의 root 프로젝트와 아픙로 추가될 서브 모듈에 대한 설정
+allprojects {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+
+    repositories {
+        mavenCentral()
+    }
+
+}
+
+
+// 루트 제외한 전체 서브 모듈에 해당되는 설정
+// settings.gradle에 include된 전체 프로젝트에 대한 공통 사항을 명시함
+// root 프로젝트까지 적용하고 싶다면 allprojects에서 사용
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    // 모든 서브 모듈에서 사용될 공통 의존성들을 추가함
+    dependencies {
+        if (project.name != 'global-utils') {
+            implementation project(':global-utils')
+            implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+//            if (project.name != 'gateway-service') {
+                // FOR TRACING
+//                implementation 'org.springframework.boot:spring-boot-starter-actuator'
+//                implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+//                implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+//            }
+        }
+
+        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
+        implementation "org.projectlombok:lombok"
+        annotationProcessor "org.projectlombok:lombok"
+    }
+
+    ext {
+        set('springCloudVersion', "2023.0.0")
+        set('eurekaClientVersion', "4.1.0")
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
+    // 모든 서브 모듈에서 Junit을 사용하기 위한 설정
+    test {
+        useJUnitPlatform()
+    }
+}

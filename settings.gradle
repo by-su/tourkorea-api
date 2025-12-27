@@ -1,0 +1,17 @@
+rootProject.name = 'tour-korea'
+
+include 'component:component-email',
+        'component:component-security',
+        'component:component-exception',
+        'component:component-jpa',
+        "component:component-openfeign",
+        "component:component-web"
+
+include 'applications:discovery-service',
+        'applications:gateway-service',
+        'applications:notification-service',
+        'applications:article-service',
+        'applications:user-service',
+        'applications:file-service'
+
+include 'global-utils'
