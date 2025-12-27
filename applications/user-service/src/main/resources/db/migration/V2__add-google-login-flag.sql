@@ -1,0 +1,1 @@
+alter table user add column google bit default 0;
