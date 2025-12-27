@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: none
+  application:
+    name: file-service
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+server:
+  port: ${FILE_SERVICE_PORT}
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER}
+
+aws.access.key: ${AWS_ACCESS_KEY}
+aws.secret.key: ${AWS_SECRET_KEY}
+aws.s3.bucket: ${AWS_S3_BUCKET}
+
+jwt:
+  secret-key: ${JWT_TOKEN_SECRET}
+  accessToken-expired-time-ms: ${JWT_TOKEN_EXPIRED_TIME}
+
+feign-url:
+  user-service: ${USER_SERVICE_URL}
+
+base-package:
+  openfeign: "info.tourkorea.fileservice.service"

@@ -1,0 +1,21 @@
+bootJar { enabled = true }
+jar { enabled = false }
+
+dependencies {
+    implementation project(":component:component-exception")
+    implementation project(":component:component-openfeign")
+    implementation project(":component:component-security")
+
+    implementation project(":global-utils")
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.683'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
