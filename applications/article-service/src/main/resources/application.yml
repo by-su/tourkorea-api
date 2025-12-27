@@ -1,0 +1,57 @@
+server:
+  port: ${ARTICLE_PORT}
+
+base-package:
+  jpa: "info.tourkorea.articleservice"
+  openfeign: "info.tourkorea.articleservice.infrastructure"
+
+feign-url:
+  user-service: ${USER_SERVICE_URL}
+  notification-service: ${NOTIFICATION_SERVICE_URL}
+
+spring:
+  application:
+    name: article-service
+  datasource:
+    url: ${ARTICLE_MYSQL}
+    username: ${ARTICLE_MYSQL_USERNAME}
+    password: ${ARTICLE_MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO}
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+        default_batch_fetch_size: 100
+    database: mysql
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_SERVICE_URL}
+      registry-fetch-interval-seconds: ${EUREKA_FETCH_INTERVAL}
+      disable-delta: false
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: trace
+
+jwt:
+  secret-key: ${JWT_TOKEN_SECRET}
+  accessToken-expired-time-ms: ${JWT_TOKEN_EXPIRED_TIME}
+
+property:
+  path: ${PROPERTY_PATH}
