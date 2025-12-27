@@ -1,0 +1,87 @@
+server:
+  port: ${GATEWAY_PORT}
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_SERVICE_URL}
+      registry-fetch-interval-seconds: ${EUREKA_FETCH_INTERVAL}
+      disable-delta: false
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - ${ONPREMISE_ORIGIN_NGINX}
+              - ${ONPREMISE_ORIGIN}
+              - ${LOCAL_ORIGIN}
+              - ${LOCAL_ORIGIN_NGINX}
+              - ${EC2_ORIGIN}
+              - "http://220.78.121.228:3800"
+              - "http://tourkorea.info"
+              - "https://tourkorea.info"
+              - "http://tourkorea.info:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+
+        - id: article-service
+          uri: lb://article-service
+          predicates:
+            - Path=/article-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/article-service/(?<segment>.*), /$\{segment}
+
+        - id: file-service
+          uri: lb://file-service
+          predicates:
+            - Path=/file-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/file-service/(?<segment>.*), /$\{segment}
+
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+              - Path=/notification-service/**
+          filters:
+              - RemoveRequestHeader=Cookie
+              - RewritePath=/notification-service/(?<segment>.*), /$\{segment}
+
+jwt:
+  secret-key: ${JWT_TOKEN_SECRET}
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          cors:
+            reactive:
+              DefaultCorsProcessor=debug:
