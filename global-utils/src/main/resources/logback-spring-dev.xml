@@ -1,0 +1,60 @@
+<included>
+
+    <property resource="logback-variables.properties"/>
+
+    <!--  custom appender  -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <layout>
+            <!--            로그가 어떤 형식으로 출력 될 것인지 정할 수 있다.       -->
+            <pattern>
+                [CONSOLE] %green(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %highlight(%5level) %logger - %yellow(%msg%n)
+            </pattern>
+        </layout>
+    </appender>
+
+    <appender name="REQUEST" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/request.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${LOG_DIR}/archive/request.%d{yyyy-MM-dd, ${logback.timezone:-Asia/Seoul}}_%i.log
+            </fileNamePattern>
+            <maxFileSize>10MB</maxFileSize> <!-- 로그파일의 최대 크기 -->
+            <maxHistory>30</maxHistory> <!-- 로그파일 최대 보관주기 (단위 : 일) -->
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                [REQUEST] ${LOG_PATTERN}
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/error.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${LOG_DIR}/archive/error.%d{yyyy-MM-dd, ${logback.timezone:-Asia/Seoul}}_%i.log
+            </fileNamePattern>
+            <maxFileSize>50MB</maxFileSize> <!-- 로그파일의 최대 크기 -->
+            <maxHistory>30</maxHistory> <!-- 로그파일 최대 보관주기 (단위 : 일) -->
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>
+                [ERROR] ${LOG_PATTERN}
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="REQUEST" />
+        <appender-ref ref="ERROR" />
+    </root>
+
+</included>

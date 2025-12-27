@@ -1,0 +1,20 @@
+<included>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <!--  custom appender  -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <layout>
+            <!--            로그가 어떤 형식으로 출력 될 것인지 정할 수 있다.       -->
+            <pattern>
+                [CONSOLE] %green(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %highlight(%5level) %logger - %yellow(%msg%n)
+            </pattern>
+        </layout>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</included>
