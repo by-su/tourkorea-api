@@ -8,10 +8,11 @@
 
 ## Documentation
 
-| 문서 제목                   | 링크                                                          | 버전  | 날짜         | 
-|---------------------------|-------------------------------------------------------------|------|------------|
-| 모듈화                    | [모듈화.md](docs%2Fmodularization%2Fmodule_system.md)          | v1.0 | 2025/12/27 |
-| Gradle 멀티 모듈           | [Gradle 멀티 모듈](docs%2Fmodularization%2Fmoudlraization.md)   | v1.0 | 2024/12/27 |
+| 문서 제목               | 링크                                                        | 버전  | 날짜         | 
+|---------------------|-----------------------------------------------------------|------|------------|
+| 모듈화                 | [모듈화.md](docs%2Fmodularization%2Fmodule_system.md)        | v1.0 | 2025/12/27 |
+| Gradle 멀티 모듈        | [Gradle 멀티 모듈](docs%2Fmodularization%2Fmoudlraization.md) | v1.0 | 2025/12/27 |
+| MSA swagger세팅 | [MSA swagger](docs/swagger.md)                            | v1.0 | 2025/12/27 |
 
 ## 프로젝트 실행 시
 - VM Options에 아래와 같이 실행하고 싶은 환경의 properties 파일을 지정해야 한다.
